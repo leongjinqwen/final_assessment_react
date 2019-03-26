@@ -4,46 +4,17 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
-
-.my-video {
-    width: 100%;
-    height: 100%;
-}
-
-.top-container {
-    width: 500px;
-    margin: 30px auto;
-}
-
-.btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 5px;
-}
-
-.select {
-    height: 40px;
-    background: #333;
-    color: #fff;
-    padding: 3px;
-    width: 100%;
-    border: 1px #666 solid;
-    margin-bottom: 10px;
-}
-
-.bottom-container {
-    max-width: 960px;
-    margin: auto;
-    padding: 10px;
-}
-
-#canvas {
-    display: none;
-}
-
-@media (min-width: 321px) and (max-width: 480px) {
-    video {
-      width: 100%;
+@media (max-width: 480px) {
+    .img1 {
+        display: none;
     }
-  }
+    .img2 {
+        display: block;
+    }
+    /* styles for mobile browsers smaller than 480px; (iPhone) */
+}
+@media (min-width: 481px) {
+    .img2 {
+        display: none;
+    }
+}

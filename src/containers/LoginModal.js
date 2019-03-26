@@ -50,7 +50,7 @@ export default class LoginModal extends React.Component {
             // debugger
             this.setState({
                 hasErrors : true,
-                errors : error.response.data.message,
+                errors : error.data.message,
             })
         })
     }

@@ -45,7 +45,7 @@ export default class SettingModal extends React.Component {
         .catch(error => {
             this.setState({
                 hasErrors : true,
-                errors : error.response.data.message,
+                errors : error.data.message,
             })
         })
     }
@@ -72,7 +72,7 @@ export default class SettingModal extends React.Component {
         .catch(error => {
             this.setState({
                 hasErrors : true,
-                errors : error.response.data.message,
+                errors : error.data.message,
             })
         })
     }
@@ -94,11 +94,11 @@ export default class SettingModal extends React.Component {
                         <Input type="username" name="username" onChange={this.handleForm} placeholder="Username" />
                         <Label for="password">New Password</Label>
                         <Input type="password" name="password" onChange={this.handleForm} placeholder="Password" />
-                        <Button className="mt-2" color="primary" block onClick={this.handleEdit} >Edit</Button>                  
+                        <Button style={{display:'block',width:'100%',margin:'5px 0'}} color="primary" onClick={this.handleEdit} >Edit</Button>                  
                     </FormGroup>
                     <FormGroup>
                         <Label for="delete">Want to delete your account?</Label>
-                        <Button className="mt-2" color="danger" block onClick={this.handleDelete} >Delete</Button>                  
+                        <Button color="danger" onClick={this.handleDelete} style={{display:'block',width:'100%',margin:'5px 0'}}>Delete</Button>                  
                     </FormGroup>
                 </ModalBody>
             </Modal>

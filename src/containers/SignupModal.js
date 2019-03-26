@@ -50,7 +50,7 @@ export default class SignupModal extends React.Component {
             // debugger
             this.setState({
                 hasErrors : true,
-                errors : error.response.data.message,
+                errors : error.data.message,
             })
         })
     }

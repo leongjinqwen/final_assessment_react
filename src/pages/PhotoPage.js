@@ -4,15 +4,16 @@ import { Card, Button, CardImg, CardImgOverlay } from 'reactstrap';
 
 export default class PhotoPage extends React.Component {
     state = {
-        constraints: { audio: false, video: { width: 400, height: 300 } },
+        constraints: { audio: false, video: true },
         filter: 'none',
-        width:400,
-        height:300,
+        width:800,
+        height:600,
         images:[],
         success:[],
-        errors:[]
+        errors:[],
+        streaming:false
     }
-        
+    
     componentDidMount(){
         navigator.mediaDevices.getUserMedia(this.state.constraints)
             .then(stream => {
@@ -31,9 +32,13 @@ export default class PhotoPage extends React.Component {
         const canvas = this.refs.myCanvas;
         const video = this.refs.myVideo;  
         const context = canvas.getContext('2d');
+        console.log(video.style.width)
+        console.log(video.style.height)
         // set canvas props
         canvas.width = width;
         canvas.height = height;
+        console.log(canvas.style.width)
+        console.log(canvas.style.height)
         // Draw an image of the video on the canvas
         if (filter !== undefined) {
             // Set image filter
@@ -43,23 +48,20 @@ export default class PhotoPage extends React.Component {
             // create image url
             const imgUrl = canvas.toDataURL('image/png');
             // Set img src
-            console.log(imgUrl)
             const image = {imgUrl:imgUrl}
             const album = [...this.state.images]
             // Add image to album
             album.push(image)
             this.setState({
-              images: album
+                images: album
             })
         }
     }
 
     filterChange = (e)=> {
         e.preventDefault();
-        console.log(e.target.value)
-        const photoFilter = e.target.value
         this.setState({
-            filter : photoFilter,
+            filter : e.target.value,
         })
     }
 
@@ -76,19 +78,18 @@ export default class PhotoPage extends React.Component {
         })
     }
 
-    
-
     render() {
         const {images} = this.state
         return (
             <>
                 <div className="container">
-                    <div className="top-container">
-                        <video style={{filter:`${this.state.filter}`}} ref="myVideo" className="my-video">Stream not available...</video> 
-                        <Button color="dark" onClick={this.takePicture}>
+                    <div className="embed-responsive embed-responsive-16by9" style={{margin: '10px auto'}} >
+                        <video style={{filter:`${this.state.filter}`,width:'100%',height:'100%',maxWidth:'960px'}} ref="myVideo" className="my-video" >Stream not available...</video> 
+                    </div>
+                        <Button color="dark" onClick={this.takePicture} style={{display:'block',width:'100%',padding:'10px',maxWidth:'960px',margin:'5px 0'}} >
                         Take Photo
                         </Button>
-                        <select className="select" onChange={this.filterChange} ref="select">
+                        <select onChange={this.filterChange} ref="select" style={{height:'40px',background:'#333',color:'#fff',padding:'3px',width:'100%',maxWidth:'960px',border:'1px #666 solid'}} >
                             <option value="none">Normal</option>
                             <option value="grayscale(100%)">Grayscale</option>
                             <option value="sepia(100%)">Sepia</option>
@@ -98,14 +99,13 @@ export default class PhotoPage extends React.Component {
                             <option value="contrast(200%)">Contrast</option>
                             <option value="contrast(100%) brightness(150%)">Brightness</option>
                         </select>
-                        <Button color="light" onClick={this.clearButton}>Clear</Button>
-                        <canvas id="canvas" ref="myCanvas"></canvas>
-                    </div>
-                    <div className="bottom-container">
+                        <Button color="secondary" onClick={this.clearButton} style={{display:'block',width:'100%',padding:'10px',maxWidth:'960px',margin:'5px 0'}}>Clear</Button>
+                        <canvas style={{display:'none'}} ref="myCanvas"></canvas>
+                    <div className="bottom-container m-auto p-10" style={{maxWidth: '960px'}}>
                         {
                         images.map((images, index) =>(
-                            <Card inverse key={index} style={{width:'50%'}}>
-                                <CardImg src={images.imgUrl} alt={images.imgUrl} />
+                            <Card inverse key={index} style={{maxWidth: '425px'}} className="d-inline-block" >
+                                <CardImg src={images.imgUrl} alt={images.imgUrl}  />
                                 <CardImgOverlay className='d-flex align-items-end'>
                                     <a href={images.imgUrl} download><Button color="primary">Download</Button></a>
                                 </CardImgOverlay>

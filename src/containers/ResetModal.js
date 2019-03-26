@@ -38,7 +38,7 @@ export default class ResetModal extends React.Component {
         .catch(error => {
             this.setState({
                 hasErrors : true,
-                errors : error.response.data.message,
+                errors : error.data.message,
             })
         })
     }
