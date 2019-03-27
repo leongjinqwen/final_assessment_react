@@ -32,13 +32,9 @@ export default class PhotoPage extends React.Component {
         const canvas = this.refs.myCanvas;
         const video = this.refs.myVideo;  
         const context = canvas.getContext('2d');
-        console.log(video.style.width)
-        console.log(video.style.height)
         // set canvas props
         canvas.width = width;
         canvas.height = height;
-        console.log(canvas.style.width)
-        console.log(canvas.style.height)
         // Draw an image of the video on the canvas
         if (filter !== undefined) {
             // Set image filter
