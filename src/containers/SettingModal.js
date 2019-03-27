@@ -10,7 +10,27 @@ export default class SettingModal extends React.Component {
         success: [],
         hasErrors: false,
         isEdit:false,
-        isDelete:false
+        isDelete:false,
+        user:''
+    }
+
+    componentDidMount() {
+        const user = JSON.parse(localStorage.me)
+        axios({
+            method: 'get',
+            url: 'https://photofy.herokuapp.com/api/v1/users/me',
+            headers: { 
+                Authorization: `Bearer ${user.auth_token}`
+            },
+        })
+        .then(result => {
+            this.setState({
+              user : result.data,
+            });
+        })
+        .catch(error => {
+            console.log('ERROR: ', error)
+        })
     }
 
     handleForm=(event)=> {
@@ -45,7 +65,7 @@ export default class SettingModal extends React.Component {
         .catch(error => {
             this.setState({
                 hasErrors : true,
-                errors : error.data.message,
+                errors : error.response.data.message,
             })
         })
     }
@@ -72,13 +92,15 @@ export default class SettingModal extends React.Component {
         .catch(error => {
             this.setState({
                 hasErrors : true,
-                errors : error.data.message,
+                errors : error.response.data.message,
             })
         })
+        localStorage.removeItem('me')
+        this.forceUpdate()
     }
 
     render() {
-        
+        const {user} = this.state
         const {edit,editModal} = this.props
         const closeBtn = <button className="close" onClick={editModal}>&times;</button>;
         return (
@@ -91,7 +113,7 @@ export default class SettingModal extends React.Component {
                     { this.state.hasErrors ? <UncontrolledAlert color="danger">{this.state.errors}</UncontrolledAlert> : null }
                     <FormGroup>
                         <Label for="username">New Username</Label>
-                        <Input type="username" name="username" onChange={this.handleForm} placeholder="Username" />
+                        <Input type="username" name="username" onChange={this.handleForm} defaultValue={user.username} placeholder="Username" />
                         <Label for="password">New Password</Label>
                         <Input type="password" name="password" onChange={this.handleForm} placeholder="Password" />
                         <Button style={{display:'block',width:'100%',margin:'5px 0'}} color="primary" onClick={this.handleEdit} >Edit</Button>                  

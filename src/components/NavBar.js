@@ -26,13 +26,17 @@ export default class NavBar extends React.Component {
 
   editModal=()=> {
     this.setState({
-      edit: !this.state.edit
+      edit: !this.state.edit,
+      isOpen: false
     });
   }
 
   handleLogout = () => {
     localStorage.removeItem('me')
-    this.forceUpdate()
+    // this.forceUpdate()
+    this.setState({
+      isOpen: false
+    });
   }
 
   render() {
@@ -53,7 +57,7 @@ export default class NavBar extends React.Component {
                   <Link to="/" className="nav-link text-dark" onClick={this.editModal}>Setting</Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/camera" className="nav-link text-dark">Camera</Link>
+                  <Link to="/camera" className="nav-link text-dark" onClick={this.open_toggle}>Camera</Link>
                 </NavItem>
                 <NavItem>
                   <Link to="/" className="nav-link text-dark" onClick={this.handleLogout}>Logout</Link>

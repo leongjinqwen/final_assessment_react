@@ -21,7 +21,7 @@ export default class PhotoPage extends React.Component {
                 video.srcObject = stream;
                 video.play();
             })
-            .catch(function(err) {
+            .catch(err => {
                 console.log(`Error: ${err}`);
             });
     }

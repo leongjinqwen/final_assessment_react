@@ -37,7 +37,6 @@ export default class LoginModal extends React.Component {
             }, 
         })
         .then(response => {
-            // debugger
             console.log(response);
             localStorage.setItem('me', JSON.stringify(response.data));
             setTimeout(this.props.toggle,1000);
@@ -47,10 +46,9 @@ export default class LoginModal extends React.Component {
             })
         })
         .catch(error => {
-            // debugger
             this.setState({
                 hasErrors : true,
-                errors : error.data.message,
+                errors : error.response.data.message,
             })
         })
     }
